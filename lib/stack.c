@@ -1,3 +1,4 @@
+#include "stack.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
@@ -106,38 +107,38 @@ void free_stack(Stack* s){
 }
 
 
-/* test struct for generic stack implem. */
-
-typedef struct {
-	int x;
-	int y;
-} Point;
 
 
-int main(){
-	
-	Stack* point_stack = create_stack(sizeof(Point));
 
-	Point p1 = {1, 2};
-	Point p2 = {3, 4};
-	Point p3 = {4, 5};
+
+
+
+
+
 
 	
-	push(point_stack, &p1);
-	push(point_stack, &p2);
-	push(point_stack, &p3);
 
-	while(!is_empty(point_stack)){
-		Point* top = (Point*)peek(point_stack);
-		printf("Top: (%d, %d)\n", top->x, top->y);
 
-		Point* popped = (Point*)pop(point_stack);
-		printf("Popped: (%d, %d)\n", popped->x, popped->y);
-		free(popped);
 
-	}
 
-	free_stack(point_stack);
-	return 0;
-}
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
