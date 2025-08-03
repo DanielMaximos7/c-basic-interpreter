@@ -24,4 +24,7 @@ typedef struct {
 
 Token* tokenize_line(const char* line, int* out_token_count);
 
+void print_tokens(Token* tokens, int count);
+
+
 #endif // LEXER_H
