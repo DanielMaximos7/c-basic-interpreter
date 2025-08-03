@@ -129,7 +129,7 @@ ASTNode* parse_expression(){
    if(!left) return NULL;
 
    while(peek().type == TOKEN_PLUS || peek().type == TOKEN_MINUS){
-        printf("Operator token at index %d: type=%d, value=%s\n", current, peek().type, peek().value);       
+       
         Token op_token = advance();
 
         char op;
@@ -156,10 +156,12 @@ ASTNode* parse_expression(){
    return left;
 }
 
-
-ASTNode* parse_primary(){
+ASTNode* parse_primary()
+    /* advances the token pointer */{
     if(match(TOKEN_NUMBER)){
-        int value = atoi(previous().value);
+        /* set the previous token (advanced due to match() value */
+        int value = atoi(previous().value); //ACSII to int previous val
+        //creates a new node for the number, with a value and type
         ASTNode* node = malloc(sizeof(ASTNode));
         node->type = NODE_NUMBER;
         node->ASTNode.number.value = value;
@@ -175,23 +177,6 @@ ASTNode* parse_primary(){
 
     return NULL;
 
-}
-
-ASTNode* make_number_node(int value){
-    
-    ASTNode* node = malloc(sizeof(ASTNode));
-    node->type = NODE_NUMBER;
-    node->ASTNode.number.value = value;
-    return node;
-
-}
-
-ASTNode* make_identifier_node(char* name){
-    
-    ASTNode* node = malloc(sizeof(ASTNode));
-    node->type = NODE_IDENTIFIER;
-    node->ASTNode.identifier.name = name ? strdup(name) : NULL;
-    return node;
 }
 
 void print_ast(ASTNode* node, int indent) {
