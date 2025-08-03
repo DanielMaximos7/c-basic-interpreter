@@ -42,10 +42,17 @@ typedef struct ASTNode {
             struct ASTNode* expr;
         } print_stmt;
 
-    } AstNode;
+    } ASTNode;
+    
+}ASTNode;
 
-ASTNode* parse(Token* tokens, int token_count);
+typedef struct {
+    ASTNode** statements;
+    int count;
+}Program;
+
+Program* parse(Token* tokens, int token_count);
 void print_ast(ASTNode* node, int indent);
 void free_ast(ASTNode* node);
 
-}
+#endif

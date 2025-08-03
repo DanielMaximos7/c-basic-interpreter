@@ -75,6 +75,7 @@ Token* tokenize_line(const char* line, int* out_token_count){
 			case '/': tokens[count++] = make_token(TOKEN_SLASH, NULL); break;
 			case '(': tokens[count++] = make_token(TOKEN_LPAREN, NULL); break;
 			case ')': tokens[count++] = make_token(TOKEN_RPAREN, NULL); break;
+            case ';': tokens[count++] = make_token(TOKEN_SEMICOLON, NULL); break;
 			default:
                 		tokens[count++] = make_token(TOKEN_INVALID, NULL);
                 		break;
@@ -112,6 +113,7 @@ void print_tokens(Token* tokens, int count){
            	 case TOKEN_RPAREN:     printf("RPAREN\n"); break;
            	 case TOKEN_EOF:        printf("EOF\n"); break;
            	 case TOKEN_INVALID:    printf("INVALID\n"); break;
+             case TOKEN_SEMICOLON:  printf("SEMICOLON\n"); break;
            	 default:               printf("UNKNOWN\n"); break;
        	 }
 
