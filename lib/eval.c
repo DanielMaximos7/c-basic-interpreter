@@ -3,7 +3,6 @@
 #include <string.h>
 #include <stdio.h>
 
-
 typedef struct{
     enum { VAL_INT } type;
     union{
@@ -27,34 +26,26 @@ void set_var(char* n, int v);
 int get_var(char* n, int* out);
 void evaluate(ASTNode* node);
 
-Value evaluate(ASTNode* node){
-    
+Value evaluate(ASTNode* node){   
     switch(node->type){
-        
-        //when its a number (int assumed)
         case NODE_NUMBER:
             Value integer;
             integer.type = VAL_INT;
             integer.int_val = node->value;
             return integer;
-        
-        //if it's a var set to var_map
+      
         case NODE_IDENTIFIER:
             if(get_var(node->name) == 0){
                 set_var(node->name, 0);      
             }
-            
             int val = get_var(node->name);
             Value v;
             v.type = VAL_INT;
             v.int_val = val;
             return v;
-            
-         
-          
+        
         case NODE_BINARY_EXPR:
             int result;
-
             Value left =  evaluate(node->left);
             Value right = evaluate(node->right);
 
@@ -66,8 +57,6 @@ Value evaluate(ASTNode* node){
                     result = left.int_val - right.int_val;
                     break;
             }       
-            
-
             Value v;
             v.type = VAL_INT;
             v.int_val = result;
@@ -78,35 +67,24 @@ Value evaluate(ASTNode* node){
             char* n = node->name;
             set_var(n, value);
 
-
         case NODE_PRINT_STMT:
             evaluate(node->expr);
             
     }
 }
-
-
-
-
-
-
 /* func used to set a variable/identifier to the var_map to be referenced when needed */
-
 void set_var(char* n, int v){
     for(int i = 0; i < var_count; i++){
        if(strcmp(program_var[i].name, n) == 0){
             program_var[i].value = v;
             return; //break the func
            }
-       }
-    //create a new map to the new value set
+       }   
     program_var[var_count].name = strdup(n);
     program_var[var_count].value = v;
     var_count++;
 }
 
-
-// func to access the var table / var map
 int get_var(char* n, int* out){
     for(int i = 0; i < var_count; i++){
         if(strcmp(program_var[i].name, n) == 0){
@@ -118,7 +96,7 @@ int get_var(char* n, int* out){
     }
 }
 
-//function to evaluate based of AST types and nodes, save the identifiers and do maths in C
+
 
     
 
