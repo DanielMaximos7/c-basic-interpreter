@@ -4,7 +4,12 @@
 #include <stdio.h>
 
 
-
+typedef struct{
+    enum { VAL_INT } type;
+    union{
+        int int_val;
+    };
+}Value;
 
 typedef struct{
     int value;
@@ -20,6 +25,67 @@ int var_count = 0;
 
 void set_var(char* n, int v);
 int get_var(char* n, int* out);
+void evaluate(ASTNode* node);
+
+Value evaluate(ASTNode* node){
+    
+    switch(node->type){
+        
+        //when its a number (int assumed)
+        case NODE_NUMBER:
+            Value integer;
+            integer.type = VAL_INT;
+            integer.int_val = node->value;
+            return integer;
+        
+        //if it's a var set to var_map
+        case NODE_IDENTIFIER:
+            if(get_var(node->name) == 0){
+                set_var(node->name, 0);      
+            }
+            
+            int val = get_var(node->name);
+            Value v;
+            v.type = VAL_INT;
+            v.int_val = val;
+            return v;
+            
+         
+          
+        case NODE_BINARY_EXPR:
+            int result;
+
+            Value left =  evaluate(node->left);
+            Value right = evaluate(node->right);
+
+            switch(node->op){
+                case '+':
+                    result = left.int_val + right.int_val;
+                    break;
+                case '-':
+                    result = left.int_val - right.int_val;
+                    break;
+            }       
+            
+
+            Value v;
+            v.type = VAL_INT;
+            v.int_val = result;
+            return v;
+
+        case NODE_LET_STMT:
+            int value = evaluate(node->value);
+            char* n = node->name;
+            set_var(n, value);
+
+
+        case NODE_PRINT_STMT:
+            evaluate(node->expr);
+            
+    }
+}
+
+
 
 
 
